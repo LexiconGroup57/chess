@@ -1,3 +1,9 @@
+
+#container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
 #board {
     width: 800px;
     height: 800px;
@@ -11,7 +17,10 @@
     background-size: 85%;
     background-repeat: no-repeat;
     background-position: center;
+}
 
+p {
+    color: white;
 }
 .white {
     background-color: #ddd;
