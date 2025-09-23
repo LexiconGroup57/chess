@@ -1,0 +1,70 @@
+#board {
+    width: 800px;
+    height: 800px;
+    background-color: blue;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
+
+#board > div {
+    background-size: 85%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+.white {
+    background-color: #ddd;
+}
+
+.black {
+    background-color: #444;
+}
+
+.b1 {
+    background-image: url("images/rook-b.svg");
+}
+
+.b2 {
+    background-image: url("images/knight-b.svg");
+}
+
+.b3 {
+    background-image: url("images/bishop-b.svg");
+}
+
+.b4 {
+    background-image: url("images/queen-b.svg");
+}
+
+.b5 {
+    background-image: url("images/king-b.svg");
+}
+
+.b6 {
+    background-image: url("images/pawn-b.svg");
+}
+
+.w1 {
+    background-image: url("images/rook-w.svg");
+}
+
+.w2 {
+    background-image: url("images/knight-w.svg");
+}
+
+.w3 {
+    background-image: url("images/bishop-w.svg");
+}
+
+.w4 {
+    background-image: url("images/queen-w.svg");
+}
+
+.w5 {
+    background-image: url("images/king-w.svg");
+}
+
+.w6 {
+    background-image: url("images/pawn-w.svg");
+}
