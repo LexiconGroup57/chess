@@ -37,7 +37,9 @@ let leftSide = "RightSide";
 let [pet1, pet2, pet3, pet4] = testArray;
 
 const returnTwo = () => {
-    return ["Bob", () => {}];
+    return ["Bob", () => { console.log("Bob")}];
 }
 
 let [first, second] = returnTwo();
+
+export { keepPets, returnTwo}

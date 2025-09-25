@@ -33,28 +33,49 @@ const checkPossibleMove = (move) => {
     let white = pieces[move.oldRow][move.oldColumn][0] === 'w';
     let rowOne = move.oldRow === 1;
     let rowSix = move.oldRow === 6;
-    let rowPlusTwo = move.newRow === 3;
-    let rowMinusTwo = move.newRow === 4;
+    let rowPlusTwo = move.newRow === move.oldRow + 2;
+    let rowPlusOne = move.newRow === move.oldRow + 1;
+    let rowMinusTwo = move.newRow === move.oldRow - 2;
+    let rowMinusOne = move.newRow === move.oldRow - 1;
     let sameColumn = move.oldColumn === move.newColumn;
     let emptyTarget = pieces[move.newRow][move.newColumn] === 'n0';
+    let whiteTarget = pieces[move.newRow][move.newColumn][0] === 'w';
+    let blackTarget = pieces[move.newRow][move.newColumn][0] === 'b';
+    let nextColumn = move.newColumn === move.oldColumn + 1 || move.newColumn === move.oldColumn - 1;
+    let nextRow = rowPlusOne || rowMinusOne;
+    let perpendicular = move.newRow === move.oldRow || move.newColumn === move.oldColumn;
+    let match = (black && (emptyTarget || whiteTarget)) || (white && (emptyTarget || blackTarget));
+    let diagonal = Math.abs(move.newRow - move.oldRow) === Math.abs(move.newColumn - move.oldColumn);
+    let sameRow = move.oldRow === move.newRow;
+    let neighbour = (sameColumn && (rowMinusOne || rowPlusOne || sameRow)) || (nextColumn && (rowMinusOne || rowPlusOne || sameRow));
+    let nextSecondColumn = move.newColumn === move.oldColumn + 2 || move.newColumn === move.oldColumn - 2;
+    let knightMove = (nextColumn && (rowMinusTwo || rowPlusTwo)) || (nextRow && nextSecondColumn);
 
     const determineClearLine = () => {
+        if(!(perpendicular || diagonal )) return false;
+        let steps = Math.abs(move.newRow - move.oldRow);
+        let rowMultiplier = move.newRow === move.oldRow ? 0 : move.newRow > move.oldRow ? 1 : -1;
+        let columnMultiplier = move.newColumn === move.oldColumn ? 0 : move.newColumn > move.oldColumn ? 1 : -1;
+        for(let i = 1; i < steps; i++){
+            if(pieces[move.oldRow + i * rowMultiplier][move.oldColumn + i * columnMultiplier] !== 'n0') return false;
+        }
         return true;
     }
     switch(pieces[move.oldRow][move.oldColumn][1]){
         case '1':       // Rook
-            return true;
+            return (match && perpendicular && determineClearLine());
         case '2':       // Knight
-            return true;
+            return (match && knightMove);
         case '3':       // Bishop
-            return true;
+            return (match && diagonal && determineClearLine());
         case '4':       // Queen
-            return true;
+            return (match && (diagonal || perpendicular) && determineClearLine());
         case '5':       // King
-            return true;
+            return (match && neighbour);
         case '6':       // Pawn
             if(((black && rowOne && rowPlusTwo) || (white && rowSix && rowMinusTwo)) && sameColumn && emptyTarget && determineClearLine()) return true;
-            return false;
+            if(((black && rowPlusOne) || (white && rowMinusOne)) && sameColumn && emptyTarget) return true;
+            return (((black && rowPlusOne && whiteTarget) || (white && rowMinusOne && blackTarget)) && nextColumn);
         default:
             return false;
     }
