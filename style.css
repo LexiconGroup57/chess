@@ -19,6 +19,12 @@
     background-position: center;
 }
 
+#ui img {
+    width: 1300px;
+    height: 1300px;
+}
+
+
 p {
     color: white;
 }
